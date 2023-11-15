@@ -60,7 +60,7 @@ export function CreateWorkspaceForm() {
         const newWorkspaces = [...state.workspaces, workspace];
         setState((previous) => ({ ...previous, workspaces: newWorkspaces}));
         [state.workspaces, setState]
-
+        console.log(state.workspaces);
       } catch (error) {
         console.log(error);
         const message = error instanceof Error ? error.message : JSON.stringify(error);
@@ -72,9 +72,7 @@ export function CreateWorkspaceForm() {
         });
       }
     },
-    async clearWorkspace(){
-      LocalStorage.removeItem("workspaces");
-    }
+
   });
 
 
@@ -83,7 +81,6 @@ export function CreateWorkspaceForm() {
       actions={
         <ActionPanel>
           <Action.SubmitForm onSubmit={handleSubmit} title="Create Workspace" />
-          <Action.SubmitForm clearWorkspace={handleSubmit} title="Clear Workspace"/>
         </ActionPanel>
       }>
       <Form.TextField {...itemProps.title} title="Workspace Title" placeholder="New Workspace" />
