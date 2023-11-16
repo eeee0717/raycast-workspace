@@ -1,21 +1,22 @@
-import { ActionPanel, Detail, List, Action, Form, LocalStorage } from "@raycast/api";
+import { ActionPanel, Detail, List, Action, Form, LocalStorage, showToast, useNavigation, LaunchProps} from "@raycast/api";
 import { FormValidation, MutatePromise, useForm } from "@raycast/utils";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { runAppleScript } from "run-applescript";
 import { Workspace } from "./types";
 import { nanoid } from "nanoid";
 
-type State={
+
+type State = {
   isLoading: boolean;
-  workspaces:Workspace[];
+  workspaces: Workspace[];
 }
 
-export function CreateWorkspaceForm() {
+export function CreateWorkspaceForm(props:{draftValue?:Workspace}) {
+  const {draftValue} = props;
   const [state, setState] = useState<State>({
     isLoading: true,
-    workspaces:[]
+    workspaces: []
   });
-
   useEffect(() => {
     (async () => {
       const storedWorkspaces = await LocalStorage.getItem<string>("workspaces");
@@ -40,7 +41,6 @@ export function CreateWorkspaceForm() {
   }, [state.workspaces]);
 
   // console.log(state);
-
   const { itemProps, handleSubmit, focus, values, setValue } = useForm<Workspace>({
     validation: {
       title: FormValidation.Required,
@@ -48,13 +48,13 @@ export function CreateWorkspaceForm() {
     async onSubmit(values) {
       try {
         const workspace: {
-          id:string;
+          id: string;
           title: string;
           urls?: [];
           apps?: [];
           files?: [];
         } = {
-          id:nanoid(),
+          id: nanoid(),
           title: values.title,
         };
         if (values.urls) {
@@ -67,9 +67,15 @@ export function CreateWorkspaceForm() {
           workspace.files = values.files;
         }
         const newWorkspaces = [...state.workspaces, workspace];
-        setState((previous) => ({ ...previous, workspaces: newWorkspaces}));
+        setState((previous) => ({ ...previous, workspaces: newWorkspaces }));
         [state.workspaces, setState]
         console.log(state.workspaces);
+
+        await showToast({
+          style: Toast.Style.Success,
+          title: "Workspace created",
+          message: `Workspace ${workspace.title} created`,
+        });
       } catch (error) {
         console.log(error);
         const message = error instanceof Error ? error.message : JSON.stringify(error);
@@ -89,19 +95,26 @@ export function CreateWorkspaceForm() {
     <Form
       actions={
         <ActionPanel>
-          <Action.SubmitForm onSubmit={handleSubmit} title="Create Workspace" />
+          <Action.SubmitForm onSubmit={handleSubmit} title="Create Workspace"  />
         </ActionPanel>
       }>
-      <Form.TextField {...itemProps.title} title="Workspace Title" placeholder="New Workspace" />
+      <Form.TextField {...itemProps.title} 
+        title="Workspace Title" 
+        placeholder="New Workspace" />
       <Form.Separator />
-      <Form.TextField {...itemProps.urls} title="URLs" placeholder="please separate with ," />
-      <Form.FilePicker id="files" title="Files or Apps" info="Please select your file, folder, App" canChooseDirectories/>
+      <Form.TextField {...itemProps.urls} 
+      title="URLs" 
+      placeholder="please separate with ," />
+      <Form.FilePicker id="files" 
+      title="Files or Apps" 
+      info="Please select your file, folder, App" 
+      canChooseDirectories />
     </Form>
   );
 }
 
-export default function Command() {
+export default function Command(props: LaunchProps<{ draftValues: Workspace }>) {
   // LocalStorage.clear();
   // console.log(LocalStorage.getItem<string>("workspaces"));
-  return <CreateWorkspaceForm />;
+  return <CreateWorkspaceForm draftValue={props.draftValues} />;
 }

@@ -24,10 +24,6 @@ async function openUrl(urls: string[]) {
   }
 }
 
-async function openApp(apps: string[]) {
-
-}
-
 async function openFile(files: string[]) {
   //用默认程序打开文件夹
   if(!files || files.length === 0){
