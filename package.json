@@ -8,17 +8,10 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "my-workspace",
+      "name": "index",
       "title": "My Workspace",
       "subtitle": "Workspace",
       "description": "View your workspace",
-      "mode": "view"
-    },
-    {
-      "name": "create-workspace",
-      "title": "Create Workspace",
-      "subtitle": "Workspace",
-      "description": "Create your workspace",
       "mode": "view"
     }
   ],
