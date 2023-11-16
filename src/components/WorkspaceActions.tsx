@@ -14,6 +14,10 @@ export default function WorkspaceActions({ workspace }: WorkspaceActionsProps) {
 
     // workspace.urls = 'https://baidu.com,https://google.com';
     const urls = workspace.urls.split(',');
+    // 修除空格
+    urls.forEach((url,index)=>{
+      urls[index] = url.trim();
+    })
     console.log(urls);
     for (const url of urls) {
       await runAppleScript(`open location "${url}"`);
