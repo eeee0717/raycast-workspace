@@ -51,12 +51,20 @@ export function CreateWorkspaceForm() {
           id:string;
           title: string;
           urls?: [];
+          apps?: [];
+          files?: [];
         } = {
           id:nanoid(),
           title: values.title,
         };
         if (values.urls) {
           workspace.urls = values.urls;
+        }
+        if (values.apps) {
+          workspace.apps = values.apps;
+        }
+        if (values.files) {
+          workspace.files = values.files;
         }
         const newWorkspaces = [...state.workspaces, workspace];
         setState((previous) => ({ ...previous, workspaces: newWorkspaces}));
@@ -86,9 +94,8 @@ export function CreateWorkspaceForm() {
       }>
       <Form.TextField {...itemProps.title} title="Workspace Title" placeholder="New Workspace" />
       <Form.Separator />
-      <Form.TextField {...itemProps.urls} title="URLs" placeholder="please separate with ;" />
-
-
+      <Form.TextField {...itemProps.urls} title="URLs" placeholder="please separate with ," />
+      <Form.FilePicker id="files" title="Files or Apps" info="Please select your file, folder, App" canChooseDirectories/>
     </Form>
   );
 }

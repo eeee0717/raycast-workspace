@@ -31,7 +31,7 @@ export default function Command() {
       }
     })();
   }, []);
-  // console.log(state);
+  console.log(state.workspaces);
 
 
 
