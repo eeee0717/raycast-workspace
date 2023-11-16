@@ -39,6 +39,7 @@ export function CreateWorkspaceForm() {
     LocalStorage.setItem("workspaces", JSON.stringify(state.workspaces));
   }, [state.workspaces]);
 
+  // console.log(state);
 
   const { itemProps, handleSubmit, focus, values, setValue } = useForm<Workspace>({
     validation: {
