@@ -29,7 +29,6 @@ export default function Command() {
         const workspaces: Workspace[] = JSON.parse(storedWorkspaces);
         setState((previous) => ({ ...previous, workspaces, isLoading: false }));
       } catch (e) {
-        // can't decode todos
         setState((previous) => ({ ...previous, workspaces: [], isLoading: false }));
       }
     })();
