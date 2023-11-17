@@ -1,5 +1,6 @@
-import CreateWorkspaceAction from "./CreateWorkspaceActions";
+import CreateWorkspaceAction from "./CreateWorkspaceAction";
 import CreateWorkspaceForm from "./CreateWorkspaceForm";
 import DeleteWorkspaceAction from "./DeleteWorkspaceAction";
-
-export {CreateWorkspaceAction, CreateWorkspaceForm, DeleteWorkspaceAction};
+import EmptyView from "./EmptyView";
+import OpenWorkspaceAction from "./OpenWorkspaceAction";
+export {CreateWorkspaceAction, CreateWorkspaceForm, DeleteWorkspaceAction, EmptyView,OpenWorkspaceAction};

@@ -41,7 +41,7 @@ export function CreateWorkspaceForm(props: { draftValue?: Workspace; onCreate: (
         id="urls"
         title="URLs"
         placeholder="please separate with ," />
-      <Form.FilePicker
+      <Form.FilePicker defaultValue={draftValue?.files}
         id="files"
         title="Files or Apps"
         info="Please select your file, folder, App"
