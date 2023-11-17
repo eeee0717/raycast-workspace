@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function WorkspaceForm(props: { draftValue?: Workspace; handleSubmit: (workspaces: Workspace) => void }) {
   const { draftValue, handleSubmit } = props;
-  const id = useState(draftValue?.id || "");
+  const [id] = useState(draftValue?.id || "");
   const [title, setTitle] = useState(draftValue?.title || "");
   const [urls, setUrls] = useState(draftValue?.urls || "");
   const [files, setFiles] = useState<string[]>(draftValue?.files || []);
@@ -35,7 +35,14 @@ function WorkspaceForm(props: { draftValue?: Workspace; handleSubmit: (workspace
         placeholder="New Workspace"
       />
       <Form.Separator />
-      <Form.TextField value={urls} onChange={setUrls} id="urls" title="URLs" placeholder="please separate with ," />
+      <Form.TextField
+        value={urls}
+        onChange={setUrls}
+        id="urls"
+        title="URLs"
+        placeholder="please input urls, split by comma (full url with https://)"
+        info="https://www.google.com, https://www.raycast.com"
+      />
       <Form.FilePicker
         value={files}
         onChange={setFiles}
