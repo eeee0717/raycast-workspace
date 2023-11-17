@@ -1,11 +1,11 @@
 import { ActionPanel, Detail, List, Action, Form, LocalStorage, Toast, showToast, useNavigation, LaunchProps } from "@raycast/api";
 import { useCallback } from "react";
 import { Workspace } from "../types";
-import { WorkspaceForm } from "./WorkspaceForm";
+import WorkspaceForm from "./WorkspaceForm";
 
 
 export function CreateWorkspaceForm(props: { draftValue?: Workspace; onCreate: (workspace: Workspace) => void; }) {
-  const {onCreate, draftValue} = props;
+  const { onCreate, draftValue } = props;
   const { pop } = useNavigation();
 
   const handleSubmit = useCallback(

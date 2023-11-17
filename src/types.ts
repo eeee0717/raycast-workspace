@@ -1,8 +1,8 @@
 interface Workspace {
   id: string;
   title: string;
-  urls ?: [];
-  files ?: [];
+  urls?: string;
+  files?: [];
 }
 
-export type{Workspace};
+export type { Workspace };

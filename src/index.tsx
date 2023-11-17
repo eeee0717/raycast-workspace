@@ -1,4 +1,4 @@
-import { ActionPanel, List, LocalStorage,showToast,Toast } from "@raycast/api";
+import { ActionPanel, List, LocalStorage, showToast, Toast } from "@raycast/api";
 import { Workspace } from "./types";
 import { useState, useEffect, useCallback } from "react";
 import { CreateWorkspaceAction, DeleteWorkspaceAction, OpenWorkspaceAction } from "./components";
@@ -63,7 +63,7 @@ export default function Command() {
     async (workspace: Workspace) => {
       console.log('handleOpen');
       console.log(workspace);
-      if (workspace.urls?.length===0 && workspace.files?.length===0) {
+      if (workspace.urls?.length === 0 && workspace.files?.length === 0) {
         console.log('handleOpenError');
         await showToast({
           style: Toast.Style.Failure,
@@ -71,9 +71,10 @@ export default function Command() {
           message: "Please add URLs or Files",
         });
       }
-      await openUrl(workspace.urls);
-      await openFile(workspace.files);
+      await openUrl(workspace.urls!);
+      await openFile(workspace.files!);
     },
+    [state.workspaces, setState]
   );
 
   return (

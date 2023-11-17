@@ -4,4 +4,4 @@ import DeleteWorkspaceAction from "./DeleteWorkspaceAction";
 import OpenWorkspaceAction from "./OpenWorkspaceAction";
 import WorkspaceForm from "./WorkspaceForm";
 
-export {CreateWorkspaceAction, CreateWorkspaceForm, DeleteWorkspaceAction,OpenWorkspaceAction, WorkspaceForm};
+export { CreateWorkspaceAction, CreateWorkspaceForm, DeleteWorkspaceAction, OpenWorkspaceAction, WorkspaceForm };

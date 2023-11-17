@@ -1,8 +1,8 @@
 import { Workspace } from "../types";
-import { ActionPanel, Action, Form} from "@raycast/api";
+import { ActionPanel, Action, Form } from "@raycast/api";
 
-export function WorkspaceForm(props:{draftValue?: Workspace;handleSubmit: (workspaces: Workspace) => void;}) {
-  const {draftValue,handleSubmit} = props;
+function WorkspaceForm(props: { draftValue?: Workspace; handleSubmit: (workspaces: Workspace) => void; }) {
+  const { draftValue, handleSubmit } = props;
   console.log('WorkspaceForm', draftValue);
   return (
     <Form
@@ -28,3 +28,5 @@ export function WorkspaceForm(props:{draftValue?: Workspace;handleSubmit: (works
     </Form>
   );
 }
+
+export default WorkspaceForm;
