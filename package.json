@@ -3,7 +3,7 @@
   "name": "workspace",
   "title": "Workspace",
   "description": "Manage your workspace",
-  "icon": "command-icon.png",
+  "icon": "CarbonWorkspace.png",
   "author": "eeee",
   "license": "MIT",
   "commands": [
