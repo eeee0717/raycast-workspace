@@ -1,49 +1,15 @@
-import { Action, ActionPanel, Color, Icon, List, getPreferenceValues, LocalStorage } from "@raycast/api";
+import { ActionPanel, List, LocalStorage,showToast,Toast } from "@raycast/api";
 import { Workspace } from "./types";
 import { useState, useEffect, useCallback } from "react";
-import { CreateWorkspaceAction, DeleteWorkspaceAction, EmptyView, OpenWorkspaceAction } from "./components";
+import { CreateWorkspaceAction, DeleteWorkspaceAction, OpenWorkspaceAction } from "./components";
 import { nanoid } from "nanoid";
-import { runAppleScript } from "run-applescript";
+import { openFile, openUrl } from "./api";
+
 
 type State = {
   isLoading: boolean;
   workspaces: Workspace[];
 }
-
-async function openUrl(urls: string[]) {
-
-  // workspace.urls = 'https://baidu.com,https://google.com';
-  if (!urls || urls.length === 0) {
-    return;
-  }
-  urls = urls.split(',');
-  // 修除空格
-  urls.forEach((url, index) => {
-    urls[index] = url.trim();
-  })
-  console.log(urls);
-  for (const url of urls) {
-    await runAppleScript(`open location "${url}"`);
-  }
-}
-
-async function openFile(files: string[]) {
-  //用默认程序打开文件夹
-  if (!files || files.length === 0) {
-    return;
-  }
-  console.log(files.length);
-  for (const file of files) {
-    console.log(file);
-    await runAppleScript(`
-      tell application "Finder"
-        open POSIX file "${file}"
-      end tell
-    `);
-  }
-
-}
-
 
 export default function Command() {
 
@@ -84,8 +50,6 @@ export default function Command() {
     [state.workspaces, setState]
   );
 
-  console.log(state.workspaces);
-
   const handleDelete = useCallback(
     (index: number) => {
       const newWorkspaces = [...state.workspaces];
@@ -99,6 +63,14 @@ export default function Command() {
     async (workspace: Workspace) => {
       console.log('handleOpen');
       console.log(workspace);
+      if (workspace.urls?.length===0 && workspace.files?.length===0) {
+        console.log('handleOpenError');
+        await showToast({
+          style: Toast.Style.Failure,
+          title: "Content is Empty",
+          message: "Please add URLs or Files",
+        });
+      }
       await openUrl(workspace.urls);
       await openFile(workspace.files);
     },
@@ -106,7 +78,7 @@ export default function Command() {
 
   return (
     <List
-      isLoading={false}
+      isLoading={state.isLoading}
     >
       {state.workspaces.map((workspace, index) => (
         <List.Item
